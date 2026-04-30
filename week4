@@ -1,0 +1,36 @@
+Q4: Write a C program for implementing memory allocation method for fixed partition using First Fit.
+
+#include<stdio.h>
+
+void firstFit(int blockSize[], int m, int processSize[], int n) {
+    int i, j, allocation[n];
+
+    for(i = 0; i < n; i++)
+        allocation[i] = -1;
+
+    for(i = 0; i < n; i++) {
+        for(j = 0; j < m; j++) {
+            if(blockSize[j] >= processSize[i]) {
+                allocation[i] = j;
+                blockSize[j] -= processSize[i];
+                break;
+            }
+        }
+    }
+
+    for(i = 0; i < n; i++) {
+        if(allocation[i] != -1)
+            printf("%d %d %d\n", i+1, processSize[i], allocation[i]+1);
+        else
+            printf("%d %d NotAllocated\n", i+1, processSize[i]);
+    }
+}
+
+int main() {
+    int blockSize[] = {100, 500, 200, 300, 600};
+    int processSize[] = {212, 417, 112, 426};
+    int m = 5, n = 4;
+
+    firstFit(blockSize, m, processSize, n);
+    return 0;
+}
