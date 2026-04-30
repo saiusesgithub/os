@@ -1,0 +1,50 @@
+Q3: Write a C program to implement the producer-consumer problem using semaphores.
+
+#include<stdio.h>
+#include<stdlib.h>
+
+int mutex = 1, full = 0, empty = 10, x = 0;
+
+void wait(int *s) { (*s)--; }
+void signal(int *s) { (*s)++; }
+
+void producer() {
+    wait(&mutex);
+    wait(&empty);
+    full++;
+    x++;
+    printf("Produced %d\n", x);
+    signal(&mutex);
+}
+
+void consumer() {
+    wait(&mutex);
+    wait(&full);
+    printf("Consumed %d\n", x);
+    x--;
+    signal(&empty);
+    signal(&mutex);
+}
+
+int main() {
+    int n;
+    while(1) {
+        scanf("%d", &n);
+        switch(n) {
+            case 1:
+                if(mutex == 1 && empty != 0)
+                    producer();
+                else
+                    printf("Buffer Full\n");
+                break;
+            case 2:
+                if(mutex == 1 && full != 0)
+                    consumer();
+                else
+                    printf("Buffer Empty\n");
+                break;
+            case 3:
+                exit(0);
+        }
+    }
+}
