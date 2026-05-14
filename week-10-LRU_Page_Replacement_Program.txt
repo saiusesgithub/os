@@ -1,0 +1,78 @@
+10. Write a program to implement LRU page replacement algorithm.
+
+Program:
+--------------------------------------------------
+
+#include<stdio.h>
+#include<conio.h>
+
+int i,j,k,nof,nor,ref[50],frm[10],time[10];
+int pf=0,count=0,flag,pos,min;
+
+void main()
+{
+    clrscr();
+
+    printf("Enter no.of Frames:");
+    scanf("%d",&nof);
+
+    printf("Enter no.of Reference Strings:");
+    scanf("%d",&nor);
+
+    printf("Enter Reference String:");
+
+    for(i=0;i<nor;i++)
+        scanf("%d",&ref[i]);
+
+    for(i=0;i<nof;i++)
+    {
+        frm[i]=-1;
+        time[i]=0;
+    }
+
+    printf("\nLRU Page Replacement Process\n");
+
+    for(i=0;i<nor;i++)
+    {
+        flag=0;
+
+        for(j=0;j<nof;j++)
+        {
+            if(frm[j]==ref[i])
+            {
+                flag=1;
+                time[j]=count++;
+            }
+        }
+
+        if(flag==0)
+        {
+            min=time[0];
+            pos=0;
+
+            for(j=1;j<nof;j++)
+            {
+                if(time[j]<min)
+                {
+                    min=time[j];
+                    pos=j;
+                }
+            }
+
+            frm[pos]=ref[i];
+            time[pos]=count++;
+            pf++;
+        }
+
+        for(j=0;j<nof;j++)
+            printf("%4d",frm[j]);
+
+        printf("\n");
+    }
+
+    printf("\nTotal Page Faults=%d",pf);
+
+    getch();
+}
+
+--------------------------------------------------

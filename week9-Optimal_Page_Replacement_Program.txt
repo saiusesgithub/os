@@ -1,0 +1,87 @@
+9. Write a program to implement Optimal page replacement algorithm.
+
+Program:
+--------------------------------------------------
+
+#include<stdio.h>
+#include<conio.h>
+
+int i,j,nof,nor,ref[50],frm[10],pf=0,flag,count=0;
+int pos,farthest;
+
+void main()
+{
+    clrscr();
+
+    printf("Enter no.of Frames:");
+    scanf("%d",&nof);
+
+    printf("Enter no.of Reference Strings:");
+    scanf("%d",&nor);
+
+    printf("Enter Reference String:");
+
+    for(i=0;i<nor;i++)
+        scanf("%d",&ref[i]);
+
+    for(i=0;i<nof;i++)
+        frm[i]=-1;
+
+    printf("\nOptimal Page Replacement Process\n");
+
+    for(i=0;i<nor;i++)
+    {
+        flag=0;
+
+        for(j=0;j<nof;j++)
+        {
+            if(frm[j]==ref[i])
+                flag=1;
+        }
+
+        if(flag==0)
+        {
+            if(count<nof)
+            {
+                frm[count]=ref[i];
+                count++;
+            }
+            else
+            {
+                farthest=-1;
+
+                for(j=0;j<nof;j++)
+                {
+                    int k;
+
+                    for(k=i+1;k<nor;k++)
+                    {
+                        if(frm[j]==ref[k])
+                            break;
+                    }
+
+                    if(k>farthest)
+                    {
+                        farthest=k;
+                        pos=j;
+                    }
+                }
+
+                frm[pos]=ref[i];
+            }
+
+            pf++;
+        }
+
+        for(j=0;j<nof;j++)
+            printf("%4d",frm[j]);
+
+        printf("\n");
+    }
+
+    printf("\nTotal Page Faults=%d",pf);
+
+    getch();
+}
+
+--------------------------------------------------
