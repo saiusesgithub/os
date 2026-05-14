@@ -1,0 +1,58 @@
+7. Simulate Paging Technique of Memory Management using C program.
+
+Program:
+--------------------------------------------------
+
+#include<stdio.h>
+#include<conio.h>
+
+struct page
+{
+    int frame,pbit;
+}pt[10];
+
+int pm,lm,ps,frames,pages;
+
+void main()
+{
+    int i,laddr,pno,offset,paddr;
+
+    clrscr();
+
+    printf("Enter Physical Memory Size:");
+    scanf("%d",&pm);
+
+    printf("Enter Logical Memory Size:");
+    scanf("%d",&lm);
+
+    printf("Enter Page Size:");
+    scanf("%d",&ps);
+
+    frames=pm/ps;
+    pages=lm/ps;
+
+    for(i=0;i<pages;i++)
+    {
+        pt[i].frame=i;
+        pt[i].pbit=1;
+    }
+
+    printf("\nPage\tFrame\tPresence Bit\n");
+
+    for(i=0;i<pages;i++)
+        printf("%d\t%d\t%d\n",i,pt[i].frame,pt[i].pbit);
+
+    printf("\nEnter Logical Address:");
+    scanf("%d",&laddr);
+
+    pno=laddr/ps;
+    offset=laddr%ps;
+
+    paddr=(pt[pno].frame*ps)+offset;
+
+    printf("\nPhysical Address=%d",paddr);
+
+    getch();
+}
+
+--------------------------------------------------
